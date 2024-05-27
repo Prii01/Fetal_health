@@ -1,0 +1,26 @@
+https://www.anaconda.com/download/success
+conda create -n env python==3.10.12
+conda activate env
+python -m pip install pillow==9.4.0
+pip install scikit-learn==1.2.2
+pip install django==5.0.3
+pip install pytz==2023.4
+pip install python-dateutil==2.8.2
+pip install protobuf==3.20.3
+pip install wrapt==1.14.1
+pip install termcolor==2.4.0
+pip install flatbuffers==24.3.7
+pip install tensorflow==2.15.0
+pip install matplotlib==3.7.1
+pip install seaborn==0.13.1
+pip install BeautifulSoup4==4.12.3
+pip install pyserial
+pip install torch==2.2.1
+pip install scikit-image==0.19.3
+pip install torchvision==0.17.1
+pip install opencv-python
+pip install joblib
+pip install requests beautifulsoup4 google
+pip install pygame
+pip install gTTS
+Pip install matplotlib
