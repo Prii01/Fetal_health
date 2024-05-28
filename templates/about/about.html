@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block style %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+    }
+    .about {
+        font-size: large;
+        margin: 20px;
+        margin-left: 20px;
+        padding: 30px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        max-width: 700px;
+        max-height: 740px;
+        background: rgba(11, 179, 230, 0.831);
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        color: white;
+    }
+
+    .about h1 {
+        text-align: center;
+        font-size: 40px;
+    }
+
+    .about p {
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+
+    .about-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .about-img img {
+        max-width: 200px;
+        border-radius: 5px;
+        margin-right: 20px;
+    }
+
+    .about-text {
+        flex: 1;
+    }
+
+    .section {
+        
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        margin-left: 15px;
+        flex: 1;
+    }
+
+    .image-card {
+        height: 300px;
+        background-color: white;
+        color: black;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+
+    .image-card img {
+        width: 100%;
+        height: auto;
+    }
+
+    .image-card .content {
+        padding: 15px;
+    }
+
+    .image-card .content h2 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .image-card .content p {
+        color: #555;
+    }
+
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="about" style="margin-left: 35px;">
+        <section class="about-content">
+            <h1>About</h1>
+            <div style="text-align: justify;">
+            <p>
+                AI-based fetal health assessment involves using artificial intelligence algorithms to analyze various data points related to the health and development of the fetus during pregnancy. This can include ultrasound images, maternal health data, fetal movements, and genetic information. The AI system can detect abnormalities, monitor growth patterns, and provide insights to healthcare professionals for early intervention and management of potential complications.
+            </p>
+            <br>
+            <div class="about-info">
+                <div class="about-img">
+                    <img src="https://stream.org/wp-content/uploads/Scientist-Fetus-Embryo-healthy-Life-Baby-Science-Studies-900.jpg" alt="AI-based Fetal Health" height="200px" width="200px">
+                </div>
+                <div class="about-text">
+                    <p>
+                        Furthermore, AI-based fetal health assessment offers the potential for personalized care by tailoring recommendations and interventions based on individualized risk profiles. This proactive approach enables healthcare providers to intervene early, thereby improving outcomes for both mother and child. By harnessing the power of artificial intelligence, fetal health assessment enters a new era of precision medicine, where data-driven insights enhance prenatal care and contribute to healthier pregnancies.
+                    </p>
+                </div>
+            </div>
+            </div>
+        </section>
+    </div>
+    <div class="section">
+        <div style="border: 1px solid black; background-color: black; color: white; text-align: center; height: 50px; font-size: 35px; margin: 10px; width: 97%; ">Team Members</div>
+        <div class="image-grid">
+            <div class="image-card" >
+                <img src="{% static 'img/aishu.jpg' %}" alt="Image 1" style="height: 225px;">
+                <div class="content" style="height: 90px;">
+                    <h2>Name: Aishwarya</h2>
+                    <p>Usn: 2AG20CS003</p>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="{% static 'img/kuthi.jpg' %}" alt="Image 2" style="height: 225px;">
+                <div class="content" style="height: 90px;">
+                    <h2>Name: Kruthika</h2>
+                    <p>Usn: 2AG20CS028</p>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="{% static 'img/neeta.jpg' %}" alt="Image 3" style="height: 225px;">
+                <div class="content" style="height: 90px;">
+                    <h2>Name: Neeta</h2>
+                    <p>Usn: 2AG20CS033</p>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="{% static 'img/priya.jpg' %}" alt="Image 4" style="height: 225px;">
+                <div class="content" style="height: 90px;">
+                    <h2>Name: Priyanka</h2>
+                    <p>Usn: 2AG20CS047</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

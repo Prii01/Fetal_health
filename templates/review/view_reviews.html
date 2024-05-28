@@ -1,0 +1,34 @@
+<!-- templates/view_reviews.html -->
+
+{% extends "base.html" %}
+{% block title %}Reviews for {{ consumer.name }}{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+    <h1>Reviews for {{ consumer.name }}</h1>
+    <p>Consumer ID: {{ consumer.id }}</p>
+
+    {% if reviews %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in reviews %}
+                    <tr>
+                        <td>{{ review.rating }}</td>
+                        <td>{{ review.comment }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No reviews available for this consumer.</p>
+    {% endif %}
+{% endblock %}
+

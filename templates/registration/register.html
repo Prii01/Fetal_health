@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block style %}
+<style>
+    .card{
+        background-color: rgba(71, 176, 229, 0.895);
+    }
+    /* Apply form-control styles to text, email, and textarea */
+    input[type=text],
+    input[type=email],
+    input[type=password],
+    textarea,
+    select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+        color: black;
+    }
+
+    /* Apply form-control-lg styles for larger size */
+    input[type=text].form-control-lg,
+    input[type=email].form-control-lg,
+    input[type=password].form-control-lg,
+    textarea.form-control-lg,
+    select.form-control-lg {
+        padding: 16px;
+    }
+    .eye-icon {
+        cursor: pointer;
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #5f5d5d;
+    }
+</style>
+{% endblock %}
+{% block index %}
+{% endblock %}
+{% block content %}
+<section class="vh-20 gradient-custom">
+    <div class="container py-1 mb-5">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-6 order-md-1">
+                <div class="card text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-5 ">
+                        <div class="mb-md-5 mt-md-4 pb-5">
+                            <h2 class="fw-bold mb-2 text-uppercase">Register Form</h2>
+                            <!-- <p class="text-white-50 mb-5">
+                                Please, use the following form to Register.
+                            </p> -->
+                            <br>
+                            <form method="post" action="" style="color: black;">
+                                {% csrf_token %}
+                                <div class="form-outline form-white mb-4">
+                                    {{ user_form.username.label_tag }}
+                                    {{ user_form.username }}
+                                </div>
+                                <div class="form-outline form-white mb-4 position-relative">
+                                    {{ user_form.password.label_tag }}
+                                    {{ user_form.password }}
+                                    <i class="eye-icon fa fa-eye" onclick="togglePasswordVisibility('id_password')"></i>
+                                </div>
+                                
+                                <div class="form-outline form-white mb-4 position-relative">
+                                    {{ user_form.password2.label_tag }}
+                                    {{ user_form.password2 }}
+                                    <i class="eye-icon fa fa-eye" onclick="togglePasswordVisibility('id_password2')"></i>
+                                </div>
+                                <p><button type="submit" class="btn btn-outline-light btn-lg px-5" style="margin-left: 30%; background-color: rgb(80, 93, 239); border: 1px solid black; border-radius: 5px;">Create Account</button></p>
+                                
+                            </form>                            
+                        </div>
+                        <div>
+                            <p class="mb-0">Already have an account? <a href="{% url 'login' %}" class="text-white-50 fw-bold">Sign In</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block script %}
+<script>
+    function togglePasswordVisibility(inputId) {
+        var passwordInput = document.getElementById(inputId);
+        var eyeIcon = document.querySelector(`[onclick="togglePasswordVisibility('${inputId}')"]`);
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
+        }
+    }
+</script>
+{% endblock %}

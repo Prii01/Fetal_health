@@ -1,0 +1,20 @@
+<!-- templates/add_review.html -->
+{% extends "base.html" %}
+{% block title %}Add Review{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Add Review</h1>
+        <p>Review for Consumer ID: {{ consumer_id }}</p>
+        <p>Review for Consumer Name: {{ consumer_name }}</p>
+
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
+    </div>
+{% endblock %}

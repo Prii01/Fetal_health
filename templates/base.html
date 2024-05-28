@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    {% block links %}{% endblock %}
+
+    {% block header %}
+    {% include 'header/header1.html' %}
+    {% endblock %}
+
+    {% block style %}
+    {% endblock %}
+</head>
+<body>
+<div>
+    {% block navbar %}
+    {% include 'navigation/navigation3_fetal.html' %}
+    {% endblock %}
+</div>
+
+<div class="content glossy-bg  gradient-custom mb-7">
+        <!-- Add this div for the content -->
+            <div id="index" style="margin-top: -3%;">
+                {% block index %}
+                    {% include 'index/index.html' %}
+                {% endblock %}
+            </div>
+    
+            <div id="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+</div>
+{% block footer %}
+    {% include 'footer/footer1.html' %}
+{% endblock %}
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus/js/moment.min.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+    <script src="{% static 'lib/twentytwenty/jquery.event.move.js' %}"></script>
+    <script src="{% static 'lib/twentytwenty/jquery.twentytwenty.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>{% block script %}
+{% endblock %}
+<script>
+    // Function to scroll back to the top of the page
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({ pageLanguage: 'en' }, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<div id="google_translate_element" style="position: fixed; bottom: 20px; right: 20px; background-color: #007bff; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">
+</div>
+
+</body>
+</html>

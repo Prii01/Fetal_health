@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block style %}
+<style>
+    .card{
+        background-color: rgba(99, 182, 223, 0.895);
+        height: 10%;
+    }
+
+    form{
+        margin-left: 0px;
+    }
+    /* Apply form-control styles to text, email, and textarea */
+    input[type=text],
+    input[type=email],
+    input[type=password],
+    textarea,
+    select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #767676;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+        color: black;
+    }
+
+    /* Apply form-control-lg styles for larger size */
+    input[type=text].form-control-lg,
+    input[type=email].form-control-lg,
+    input[type=password].form-control-lg,
+    textarea.form-control-lg,
+    select.form-control-lg {
+        padding: 16px;
+    }
+
+    .eye-icon {
+        cursor: pointer;
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #464545;
+    }
+</style>
+{% endblock %}
+{% block index %}
+{% endblock %}
+{% block content %}
+<section class="vh-20 gradient-custom">
+    <div class="container py-1 mb-5">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+
+            <div class="col-12 col-md-6 order-md-1">
+                <div class="card text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-5 ">
+                        <div class="mb-md-5 mt-md-4 pb-5">
+                            <h2 class="fw-bold mb-2 text-uppercase" style="font-size: 30px;">Login Form</h2>
+                            {% if form.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    <p class="text-white-50"style="margin-left:0" >
+                                        Please check your username and password.
+                                    </p>
+                                </div>
+                            {% else %}
+                                <!-- <p class="text-white-50" style="font-size: large; margin-left: 0;">
+                                    Login Form
+                                </p> -->
+                                <br>
+                            {% endif %}
+                            <form action="{% url 'login' %}" method="post" style="margin-left: 0;">
+                                {% csrf_token %}
+                                
+                                <div class="form-outline form-white mb-4" style="margin-left:0px; color: black;">
+                                    {{ form.username.label_tag }}
+                                    {{ form.username }}
+                                </div>
+                                <div class="form-outline form-white mb-4 position-relative" style="color: black;">
+                                    {{ form.password.label_tag }}
+                                    {{ form.password }}
+                                    <i class="eye-icon fa fa-eye" onclick="togglePasswordVisibility('id_password')"></i>
+                                </div>
+                                <!-- <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="{% url 'password_reset' %}">Forgot password?</a></p> -->
+                                <button class="btn btn-outline-light btn-lg px-5" type="submit" style="border-radius: 5px; background-color: rgb(80, 93, 239); align-items: center; margin-left: 35%;">Login</button>
+                            </form>
+                        </div>
+                        <div style="color: black;">
+                            <p class="mb-0">Don't have an account? <a href="{% url 'register' %}" class="text-black-50 fw-bold">Sign Up</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block script %}
+<script>
+    function togglePasswordVisibility(inputId) {
+        var passwordInput = document.getElementById(inputId);
+        var eyeIcon = document.querySelector(`[onclick="togglePasswordVisibility('${inputId}')"]`);
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
+        }
+    }
+</script>
+{% endblock %}

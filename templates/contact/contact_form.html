@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Contact Form{% endblock %}
+
+{% block style %}
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(109.6deg, rgb(204, 228, 247) 11.2%, rgb(237, 246, 250) 100.2%);
+    }
+    * {box-sizing: border-box;}
+    
+    input[type=text], input[type=email], select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      box-shadow: #585858;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      resize: vertical;
+    }
+    
+    input[type=submit] {
+      background-color: #04AA6D;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    input[type=submit]:hover {
+      background-color: #45a049;
+    }
+    
+    .container {
+      border-radius: 5px;
+      background-color: rgba(243, 243, 243,0.8);
+      padding: 10px;
+    }
+</style>
+
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+<div class="container" style="width: 50%; height: 50%;">
+    <h1  style="margin-left: 30%;padding: 1%;font-size: 250%;">Contact Form</h1><br>
+    <!-- templates/contact_form.html -->
+    <form method="post" action="{% url 'contact' %}" id="contactForm" >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary" onclick="showSuccessModal()" style="margin-left: 45%;padding: 1%;">Submit</button>
+    </form>
+
+    <!-- Modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="successModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thank You!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Thank you for contacting us!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showSuccessModal() {
+        // You can add additional validation logic here if needed
+        $('#successModal').modal('show');
+
+        // Close the modal after 5 seconds (5000 milliseconds)
+        setTimeout(function () {
+            $('#successModal').modal('hide');
+        }, 5000);
+    }
+</script>
+{% endblock %}
+{% block footer %}
+{% endblock %}

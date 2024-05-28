@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Notifications{% endblock %}
+{% block style %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    h2 {
+        color: #333;
+    }
+    form {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: auto;
+    }
+    label {
+        font-weight: bold;
+        color: #555;
+    }
+    input[type=email], input[type=text], textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0 20px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    button[type=submit] {
+        width: 100%;
+        background-color: #007bff;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    button[type=submit]:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}
+{% block index %}
+{% endblock %}
+
+{% block content %}
+<h2 style="margin-left: 44%;padding: 1%;font-size: 250%;">Send Email</h2>
+<form method="post">
+    {% csrf_token %}
+    <label for="receiver">Receiver:</label>
+    <input type="email" id="receiver" name="receiver" required><br><br>
+    
+    <label for="subject">Subject:</label>
+    <input type="text" id="subject" name="subject" required><br><br>
+    
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" rows="4" required></textarea><br><br>
+    
+    <button type="submit">Send Email</button>
+</form>
+{% endblock %}

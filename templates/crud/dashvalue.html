@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+<div style="text-align: center;">
+    <h1>Dashboard</h1>
+    Hello, {{ request.user.username }}
+    <p>Welcome to your Page</p>
+</div>
+    <!-- start -->
+    <div class="container mt-5 p-5 rounded shadow bg-white">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-3 alert alert-success text-center">
+                    {{message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+    <div class="d-flex mb-3 justify-content-between align-items-center">
+        {% if user.is_authenticated %}
+            <a href="" data-bs-toggle="modal" data-bs-target="#addnewconsumerModal" class="btn btn-primary px-3 btn-sm">Add new Medicine</a>
+        {% endif %}
+
+        <div class="">
+            <form method="post" class="d-flex">
+                {% csrf_token %}
+                <input type="search" name="query" class="form-control" placeholder="search..." value="{{search_query}}">
+                <button class="btn btn-success btn-sm px-3 mx-2" name="search">Search</button>
+                <a href="" style="margin-right: 2%;background-color: blueviolet;" data-bs-toggle="modal" data-bs-target="#updateconsumerModal_{{consumer.id}}" class="btn btn-sm btn-success"><i class="fa-regular fa-pen-to-square"></i> Generate Report</a>
+                <a href="" data-bs-toggle="modal" data-bs-target="#deleteconsumerModal_{{consumer.id}}" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i>View Analytics</a>
+            </form>
+        </div>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col"> Medicine Name</th>
+                <th scope="col"> Email</th>
+                <!-- <th scope="col">Image</th> -->
+                <th scope="col">Quantity</th>
+                <th scope="col">Actions</th>
+                {% if user.admin %}
+                <th scope="col">Values</th>
+                {% endif %}
+                <!-- <th scope="col">Review</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for consumer in consumers %}
+                <tr>
+                    <th>{{consumer.id}}</th>
+                    <td>{{consumer.name}}</td>
+                    <td>{{consumer.email}}</td>
+                    <!-- <td>
+                        {% if consumer.image %}
+                        <img src="{{ MEDIA_URL }}{{ consumer.image.url }}" alt="{{ consumer.name }} Image" style="max-width: 50px; max-height: 50px;">
+                        {% else %}
+                            No Image
+                        {% endif %}
+                    </td> -->
+                    <td>
+                        {{ consumer.content|truncatewords_html:30 }}
+                        {% if consumer.content|length > 30 %}
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#fullContentModal_{{ consumer.id }}">Read More</a>
+                        {% endif %}
+                    </td>
+                    {% if user.is_authenticated %}
+                    <!-- <td>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#updateconsumerModal_{{consumer.id}}" class="btn btn-sm btn-success"><i class="fa-regular fa-pen-to-square"></i></a>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#deleteconsumerModal_{{consumer.id}}" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
+                    </td> -->
+                    {% endif %}
+                    
+                    <td>
+                         <!-- Link to the add review page for the specific consumer -->
+                        <a href="{% url 'add_review' consumer.id %}" class="btn btn-sm btn-info">Add Review</a>
+                        <br>
+                        <!-- Link to view reviews page for the specific consumer -->
+                        <a href="{% url 'view_reviews' consumer.id %}" class="btn btn-sm btn-secondary">View Reviews</a>
+                    </td>
+                </tr>
+                  <!-- Full Content Modal -->
+                <div class="modal fade" id="fullContentModal_{{ consumer.id }}" tabindex="-1" aria-labelledby="fullContentModalLabel_{{ consumer.id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="fullContentModalLabel_{{ consumer.id }}">Full Content</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {{ consumer.content|safe }}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- update Consumer modal -->
+                <div class="modal fade" id="updateconsumerModal_{{consumer.id}}" tabindex="-1" aria-labelledby="updateconsumerModal_{{consumer.id}}Label" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="updateconsumerModal_{{consumer.id}}Label">Update Consumer</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="id" value="{{consumer.id}}">
+                                    <div class="">
+                                        <label for="name">Consumer Name</label>
+                                        <input required type="text" value="{{consumer.name}}" name="name" class="form-control">
+                                    </div>
+                                    <div class="mt-3">
+                                        <label for="email">Consumer Email</label>
+                                        <input required type="email" value="{{consumer.email}}" name="email" class="form-control">
+                                    </div>
+                                    <div class="mt-3">
+                                        <label for="image">Consumer Image</label>
+                                        <input type="file" name="image" class="form-control">
+                                        {% if consumer.image %}
+                                            <img src="{{ consumer.image.url }}" alt="{{ consumer.name }}" class="mt-2" style="max-width: 100px; max-height: 100px;">
+                                        {% endif %}
+                                    </div>
+                                    <div class="mt-3">
+                                        <label for="content">Consumer Content</label>
+                                        <textarea name="content" class="form-control">{{ consumer.content }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary" name="update">Update Consumer</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- delete Consumer modal -->
+                <div class="modal fade" id="deleteconsumerModal_{{consumer.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteconsumerModal_{{consumer.id}}Label" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{consumer.id}}">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="deleteconsumerModal_{{consumer.id}}Label">Confirm Deletion</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to delete the consumer with the following details?</p>
+                                    <p><strong>Consumer Name:</strong> {{consumer.name}}</p>
+                                    <p><strong>Consumer Email:</strong> {{consumer.email}}</p>
+                                    {% if consumer.image %}
+                                        <p><strong>Consumer Image:</strong></p>
+                                        <img src="{{ consumer.image.url }}" alt="{{ consumer.name }}" style="max-width: 100px; max-height: 100px;">
+                                    {% endif %}
+                                    {% if consumer.content %}
+                                        <p><strong>Consumer Content:</strong></p>
+                                        <p>{{ consumer.content }}</p>
+                                    {% endif %}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-danger" name="delete">Delete Consumer</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+                <!-- add new Consumer modal -->
+
+                <!-- Modal -->
+                <!-- add new Consumer modal -->
+                <div class="modal fade" id="addnewconsumerModal" tabindex="-1" aria-labelledby="addnewconsumerModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="addnewconsumerModalLabel">Add new Consumer</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="">
+                                        <label for="name">Consumer Name</label>
+                                        <input required type="text" name="name" class="form-control">
+                                    </div>
+                                    <div class="mt-3">
+                                        <label for="email">Consumer Email</label>
+                                        <input required type="email" name="email" class="form-control">
+                                    </div>
+                                    <div class="mt-3">
+                                        <label for="image">Consumer Image</label>
+                                        <input type="file" name="image" accept="image/*" class="form-control">
+                                    </div>
+                                    <div class="mt-3">
+                                        <label for="content">Consumer Content</label>
+                                        <textarea name="content" class="form-control" rows="4"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary" name="create">Add new Consumer</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+    <!-- stop -->
+{% endblock %}

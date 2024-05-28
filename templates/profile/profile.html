@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}User Profile{% endblock %}
+{% load static %}
+{% block style %}
+<style>
+    body{
+        background: linear-gradient(109.6deg, rgb(204, 228, 247) 11.2%, rgb(237, 246, 250) 100.2%);
+    }
+    .form-group{
+        border-radius: 15px;
+    }
+</style>
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+{% block content %}
+<div style="background: linear-gradient(109.6deg, rgb(204, 228, 247) 11.2%, rgb(237, 246, 250) 100.2%); height: 700px;">
+    <div class="container mt-5" style="width: 60%;">
+        <br><br>
+        <h1 style="text-align: center; font-weight: bolder; ">PROFILE</h1>
+        <br>
+        
+        <!-- <div class="container mt-5">
+            <h2>Profile</h2>
+            
+            <h2>Your Information</h2>
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>First Name:</strong> {{ user.first_name }}</p>
+            <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+
+        </div> -->
+
+        <div class="container mt-2" id="mid" style="border: 2px solid rgb(124, 124, 124); padding: 4px 4px; background-color: rgb(255, 255, 255); border-radius: 15px; width: 850px;">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Edit Profile</h2>
+                    
+                    <!-- Form for editing profile -->
+                    <form method="post" action="{% url 'edit_profile' %}" style="padding-left: 2%; padding-right: 2%; width: 100%; overflow: hidden;">
+                        {% csrf_token %}
+                        
+                        <div class="form-group" >
+                            <label for="id_username">Username:</label>
+                            <input type="text" name="username" value="{{ user.username }}" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="id_first_name">First Name:</label>
+                            <input type="text" name="first_name" value="{{ user.first_name }}" class="form-control">
+                       </div>
+                        
+                        <div class="form-group">
+                            <label for="id_last_name">Last Name:</label>
+                            <input type="text" name="last_name" value="{{ user.last_name }}" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="id_email">Email:</label>
+                            <input type="email" name="email" value="{{ user.email }}" class="form-control">
+                        </div>
+                        <br>
+                        <!-- Save Changes and Cancel buttons -->
+                        <button type="submit" class="btn btn-primary" style="background-color: rgb(119, 172, 240); border-radius: 4px;">Save Changes</button>
+                        <a href="{% url 'profile' %}" class="btn btn-secondary" style="background-color: rgba(198, 197, 197,0.9); border-radius: 4px;">Cancel</a>
+                        <br>
+                    </form>
+                </div>
+                <div class="col-md-6" style="margin-top: 10%;">
+                    <img src="{%static 'img/mom.jpg'%}" width="75%" alt="Image" class="img-fluid" style="margin-top: -60px; border-radius: 10px;">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Link for changing password -->
+        <p>You can change your password <a href="{% url 'password_change' %}" style="color: rgb(69, 3, 73); font-size: 3vh; font-weight: bold;">Here</a> </p>
+        
+        <!-- Horizontal line -->
+        <hr>
+               
+
+        <!-- <div class="container mt-3" style="width: 900px; border: 2px solid black; border-radius:5px; background-color: rgba(255, 255, 255, 0.6);">
+            <h2>Delete Account</h2>
+            
+            <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+            
+            <form method="post" action="{% url 'delete_account' %}">
+                {% csrf_token %}
+                
+                <button type="submit" class="btn btn-danger" style="border-radius:5px;">Delete</button>
+                <a href="{% url 'profile' %}" class="btn btn-secondary" style="border-radius:5px; background-color: grey;">Cancel</a>
+                <br>
+                <br>
+            </form>
+            
+            
+        </div> -->
+
+    </div>
+</div>
+{% endblock %}

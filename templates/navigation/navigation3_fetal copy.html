@@ -1,0 +1,61 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: aqua;">
+    <a class="navbar-brand" href="/">AI based Fetal Health Assessment</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        {% if request.user.is_authenticated %}
+            <li class="nav-item ">
+            <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://localhost:8000/fetal_health/detect_fetal_health/">Fetal Health Detection</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://localhost:8000/fetal_health/view_fetal_health_data/">Health Check</a>
+                            </li>
+                        
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                        </li>
+                        <!-- Assuming this is part of your navigation menu -->
+<!-- 
+                        <li class="nav-item">
+                            {% if user.is_superuser %}
+                                <a class="nav-link" href="http://localhost:8000/mentalHealth/display_dsr/">Model</a>
+                            {% endif %}
+                        </li> -->
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'user_notifications' %}">Notification</a>
+                            </li>
+                            <form method="post" action="{% url 'logout' %}" class="form-inline my-2 my-lg-0">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Logout</button>
+                            </form>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                    {% endif %}
+       
+    </div>
+  </nav>

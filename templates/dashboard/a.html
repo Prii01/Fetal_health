@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .container-fluid {
+            margin-left: 15%;
+        }
+
+        .well {
+            background-color: #f8f8f8;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .well:hover {
+            transform: scale(1.05);
+        }
+    </style>
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid" style="margin-left: 15%;">
+        <div class="row content">
+            <br>
+
+            <div class="col-sm-9">
+                <div class="well">
+                    <h4 style="text-align: center;">Dashboard</h4>
+                </div>
+                <!-- small cards -->
+                <div class="row" style="text-align: center;">
+                    <div class="col-sm-3">
+                        <div class="well" style="background-color:#EEA5A6;">
+                            <h4>Users</h4>
+                            <p>{{ users_count }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="well" style="background-color: #E493B3;">
+                            <h4>Products</h4>
+                            <p>{{consumers}}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="well" style="background-color: #B784B7">
+                            <h4>Notifications</h4>
+                            <p>{{notify_users}}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="well" style="background-color: #8E7AB5;">
+                            <h4>Review Count</h4>
+                            <p >{{review_count}}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- details -->
+                {% if prediction %}
+                <div class="card">
+                    <div class="card-header">
+                        Crop Details
+                    </div>
+                    <div class="card-body">
+                        <p>Prediction: {{ prediction }}</p>
+                
+                        <h2>Input Data:</h2>
+                        <ul>
+                            <li>Nitrogen: {{ input_data.Nitrogen }}</li>
+                            <li>Phosphorous: {{ input_data.Phosphorous }}</li>
+                            <li>Potassium: {{ input_data.Potassium }}</li>
+                            <li>Temperature: {{ input_data.temperature }}</li>
+                            <li>Humidity: {{ input_data.humidity }}</li>
+                            <li>pH: {{ input_data.ph }}</li>
+                            <li>Rainfall: {{ input_data.rainfall }}</li>
+                        </ul>
+                
+                        {% if crop_details %}
+                        <h2>Crop Details:</h2>
+                        <ul>
+                            <li>Nitrogen: {{ crop_details.nitrogen }}</li>
+                            <li>Phosphorous: {{ crop_details.phosphorous }}</li>
+                            <li>Potassium: {{ crop_details.potassium }}</li>
+                            <li>Temperature: {{ crop_details.temperature }}</li>
+                            <li>Humidity: {{ crop_details.humidity }}</li>
+                            <li>pH: {{ crop_details.ph }}</li>
+                            <li>Rainfall: {{ crop_details.rainfall }}</li>
+                            <li>Reason: {{ crop_details.reason }}</li>
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+<br>                
+                {% endif %}
+
+                <!-- close details -->
+                <!-- cards -->
+                <!-- <div class="well">
+                  <h4 style="text-align: center;">Functionalities</h4>
+              </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="card" style="width: 34rem;">
+                            <img class="card-img-top"
+                                src="https://www.akamai.com/site/im-demo/perceptual-standard.jpg?imbypass=true"
+                                alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card" style="width: 34rem;">
+                            <img class="card-img-top"
+                                src="https://us.123rf.com/450wm/shushanto/shushanto2209/shushanto220900703/191842443-destruction-of-planets-concept-art-illustration-background-image.jpg?ver=6"
+                                alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card" style="width: 34rem;">
+                            <img class="card-img-top"
+                                src="https://www.akamai.com/site/im-demo/perceptual-standard.jpg?imbypass=true"
+                                alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                    of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- cards end -->
+                <br>
+                <!-- graph -->
+                <div class="row">
+                    <div class="col-sm-6">
+                        <!-- Placeholder for Bar Chart -->
+                        <div class="well">
+                            <canvas id="barChart" width="500" height="200"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Placeholder for Line Chart second graph --> 
+                    <!-- <div class="col-sm-6">
+                        <div class="well">
+                            <canvas id="lineChart" width="500" height="200"></canvas>
+                        </div>
+                    </div> -->
+
+                    <!-- Placeholder for Pie Chart -->
+                    <!-- <div class="col-sm-6">
+                        <div class="well">
+                            <canvas id="pieChart" width="500" height="200"></canvas>
+                        </div>
+                    </div> -->
+
+                    <!-- Placeholder for Doughnut Chart -->
+                    <!-- <div class="col-sm-6">
+                        <div class="well">
+                            <canvas id="doughnutChart" width="500" height="200"></canvas>
+                        </div>
+                    </div> -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block script %}
+<script>
+    // Sample data for charts
+    // Define your dynamic data
+    var labels = ["Nitrogen", "Phosphorous", "Potassium", "Temperature", "Humidity", "pH", "Rainfall"];
+    var dataValues = [{{ input_data.Nitrogen }}, {{ input_data.Phosphorous }}, {{ input_data.Potassium }},
+                    {{ input_data.temperature }}, {{ input_data.humidity }}, {{ input_data.ph }}, {{ input_data.rainfall }}];
+
+    // Create the datasets object
+    var datasets = [{
+        label: 'Crop Details',
+        data: dataValues,
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+    }];
+
+    // Define the barChartData object
+    var barChartData = {
+        labels: labels,
+        datasets: datasets
+    };
+
+    //second
+     // Define data for Line Chart
+     var lineChartData = {
+        labels: ["Nitrogen", "Phosphorous", "Potassium", "Temperature", "Humidity", "pH", "Rainfall"],
+        datasets: [{
+            label: 'Crop Details',
+            data: [
+                {{ crop_details.Nitrogen }},
+                {{ crop_details.Phosphorous }},
+                {{ crop_details.Potassium }},
+                {{ crop_details.temperature }},
+                {{ crop_details.humidity }},
+                {{ crop_details.ph }},
+                {{ crop_details.rainfall }}
+            ],
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+        }]
+    };
+
+    // Create Line Chart
+    var lineChart = new Chart(document.getElementById('lineChart').getContext('2d'), {
+        type: 'line',
+        data: lineChartData,
+    });
+
+    
+    //third
+    var pieChartData = {
+        labels: ["Desktop", "Mobile", "Tablet"],
+        datasets: [{
+            data: [30, 40, 30],
+            backgroundColor: ['rgba(255, 99, 132, 0.7)', 'rgba(54, 162, 235, 0.7)', 'rgba(255, 205, 86, 0.7)'],
+            hoverOffset: 4
+        }]
+    };
+    //forth
+    var doughnutChartData = {
+        labels: ["Male", "Female"],
+        datasets: [{
+            data: [45, 55],
+            backgroundColor: ['rgba(255, 99, 132, 0.7)', 'rgba(54, 162, 235, 0.7)'],
+            hoverOffset: 4
+        }]
+    };
+
+    // Create Bar Chart
+    var barChart = new Chart(document.getElementById('barChart').getContext('2d'), {
+        type: 'bar',
+        data: barChartData,
+    });
+
+    // Create Line Chart
+    var lineChart = new Chart(document.getElementById('lineChart').getContext('2d'), {
+        type: 'line',
+        data: lineChartData,
+    });
+
+    // Create Pie Chart
+    var pieChart = new Chart(document.getElementById('pieChart').getContext('2d'), {
+        type: 'pie',
+        data: pieChartData,
+    });
+
+    // Create Doughnut Chart
+    var doughnutChart = new Chart(document.getElementById('doughnutChart').getContext('2d'), {
+        type: 'doughnut',
+        data: doughnutChartData,
+    });
+</script>
+
+{% endblock %}
