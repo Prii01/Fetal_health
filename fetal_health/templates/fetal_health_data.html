@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% block style %}
+    <style>
+       body {
+        background: linear-gradient(109.6deg, rgb(204, 228, 247) 11.2%, rgb(237, 246, 250) 100.2%);
+    width: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Remove scroll from the body */
+    height: 100vh; /* Full height for the body */
+}
+
+.container {
+    width: 100%; /* Set container width to 100% */
+    
+    background-color: rgba(255, 255, 255,0.6);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    height: calc(100vh - 40px); /* Full height minus padding */
+    overflow-y: auto; /* Scrollable container */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 36px;
+    color: #333;
+}
+
+.header p {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #666;
+}
+
+#fetal-health-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    display: block;
+    height: calc(100% - 40px); /* Full height minus padding/margin */
+}
+
+#fetal-health-table th, #fetal-health-table td {
+    border: 1px solid #dee2e6;
+    text-align: left;
+    padding: 12px;
+}
+
+#fetal-health-table th {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+}
+
+#fetal-health-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#fetal-health-table tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 900px) {
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .header p {
+        font-size: 16px;
+    }
+
+    #fetal-health-table th, #fetal-health-table td {
+        padding: 8px;
+    }
+
+    #fetal-health-table thead {
+        display: none;
+    }
+
+    #fetal-health-table, #fetal-health-table tbody, #fetal-health-table tr, #fetal-health-table td {
+        display: block;
+        width: 100%;
+    }
+
+    #fetal-health-table tr {
+        margin-bottom: 15px;
+        border-bottom: 2px solid #ddd;
+    }
+
+    #fetal-health-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    #fetal-health-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-weight: bold;
+        text-align: left;
+        white-space: nowrap;
+    }
+}
+
+    </style>
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="header">
+            <h1>Dashboard</h1>
+            <p>Hello, {{ request.user.username }}</p>
+            <p>Welcome to your Page</p>
+            <h1>Fetal Health Data</h1>
+        </div>
+        <table id="fetal-health-table">
+            <thead>
+                <tr>
+                    <th>Baseline Value</th>
+                    <th>Accelerations</th>
+                    <th>Fetal Movement</th>
+                    <th>Uterine Contractions</th>
+                    <th>Light Decelerations</th>
+                    <th>Severe Decelerations</th>
+                    <th>Prolongued Decelerations</th>
+                    <th>Abnormal Short Term Variability</th>
+                    <th>Mean Value of Short Term Variability</th>
+                    <th>Percentage of Time with Abnormal Long Term Variability</th>
+                    <th>Mean Value of Long Term Variability</th>
+                    <th>Fetal Health</th>
+                    <th>Delivery Type</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in fetal_health_data %}
+                <tr>
+                    <td data-label="Baseline Value">{{ data.baseline_value }}</td>
+                    <td data-label="Accelerations">{{ data.accelerations }}</td>
+                    <td data-label="Fetal Movement">{{ data.fetal_movement }}</td>
+                    <td data-label="Uterine Contractions">{{ data.uterine_contractions }}</td>
+                    <td data-label="Light Decelerations">{{ data.light_decelerations }}</td>
+                    <td data-label="Severe Decelerations">{{ data.severe_decelerations }}</td>
+                    <td data-label="Prolongued Decelerations">{{ data.prolongued_decelerations }}</td>
+                    <td data-label="Abnormal Short Term Variability">{{ data.abnormal_short_term_variability }}</td>
+                    <td data-label="Mean Value of Short Term Variability">{{ data.mean_value_of_short_term_variability }}</td>
+                    <td data-label="Percentage of Time with Abnormal Long Term Variability">{{ data.percentage_of_time_with_abnormal_long_term_variability }}</td>
+                    <td data-label="Mean Value of Long Term Variability">{{ data.mean_value_of_long_term_variability }}</td>
+                    <td data-label="Fetal Health">{{ data.get_fetal_health_display }}</td>
+                    <td data-label="Delivery Type">{{ data.delivery_type }}</td>
+                    <td data-label="Created At">{{ data.created_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% load static %}
+{% block style %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .filter-box {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .filter-box input {
+            padding: 10px;
+            font-size: 16px;
+            width: 50%;
+            max-width: 500px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #fetal-health-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+        }
+
+        #fetal-health-table th, #fetal-health-table td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 12px;
+        }
+
+        #fetal-health-table th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+        }
+
+        #fetal-health-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        #fetal-health-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="welcome-message">
+        <h1>Dashboard</h1>
+        <p>Hello, {{ request.user.username }}</p>
+        <p>Welcome to your Page</p>
+    </div>
+    <div class="filter-box">
+        <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search for data...">
+    </div>
+    <h1>Fetal Health Data</h1>
+    <table id="fetal-health-table">
+        <thead>
+            <tr>
+                <th>Baseline Value</th>
+                <th>Accelerations</th>
+                <th>Fetal Movement</th>
+                <th>Uterine Contractions</th>
+                <th>Light Decelerations</th>
+                <th>Severe Decelerations</th>
+                <th>Prolongued Decelerations</th>
+                <th>Abnormal Short Term Variability</th>
+                <th>Mean Value of Short Term Variability</th>
+                <th>Percentage of Time with Abnormal Long Term Variability</th>
+                <th>Mean Value of Long Term Variability</th>
+                <th>Fetal Health</th>
+                <th>Delivery Type</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in fetal_health_data %}
+            <tr>
+                <td>{{ data.baseline_value }}</td>
+                <td>{{ data.accelerations }}</td>
+                <td>{{ data.fetal_movement }}</td>
+                <td>{{ data.uterine_contractions }}</td>
+                <td>{{ data.light_decelerations }}</td>
+                <td>{{ data.severe_decelerations }}</td>
+                <td>{{ data.prolongued_decelerations }}</td>
+                <td>{{ data.abnormal_short_term_variability }}</td>
+                <td>{{ data.mean_value_of_short_term_variability }}</td>
+                <td>{{ data.percentage_of_time_with_abnormal_long_term_variability }}</td>
+                <td>{{ data.mean_value_of_long_term_variability }}</td>
+                <td>{{ data.get_fetal_health_display }}</td>
+                <td>{{ data.delivery_type }}</td>
+                <td>{{ data.created_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function filterTable() {
+        const input = document.getElementById('searchInput');
+        const filter = input.value.toLowerCase();
+        const table = document.getElementById('fetal-health-table');
+        const tr = table.getElementsByTagName('tr');
+
+        for (let i = 1; i < tr.length; i++) {
+            let display = 'none';
+            const td = tr[i].getElementsByTagName('td');
+            for (let j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    if (td[j].innerText.toLowerCase().indexOf(filter) > -1) {
+                        display = '';
+                        break;
+                    }
+                }
+            }
+            tr[i].style.display = display;
+        }
+    }
+</script>
+{% endblock %}

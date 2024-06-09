@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}
+Fetal Health Prediction
+{% endblock %}
+
+{% block style %}
+<style>
+/* Add custom styles for better appearance and responsiveness */
+body{
+    background: linear-gradient(109.6deg, rgb(204, 228, 247) 11.2%, rgb(237, 246, 250) 100.2%);
+}
+#fetal-health-form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffffa4;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+label {
+    margin-bottom: 10px;
+}
+
+input[type="number"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    flex: 1 1 45%; /* Adjust the width as needed */
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex: 1 1 100%; /* Make the button span both columns */
+}
+
+@media screen and (max-width: 600px) {
+    input[type="number"] {
+        flex: 1 1 100%; /* Make the input fields span full width on smaller screens */
+    }
+}
+</style>
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+<div class="container" id="fetal-health-form">
+    <h1>Fetal Health Prediction Input Form</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div style="display: flex; justify-content: space-between;">
+            <div style="width: 48%;">
+                {{ form.baseline_value.label_tag }}
+                {{ form.baseline_value }}
+            </div>
+            <div style="width: 48%; margin-left: 120px;">
+                {{ form.accelerations.label_tag }}
+                <br>
+                {{ form.accelerations }}
+            </div>
+        </div>
+        
+        <div style="display: flex; justify-content: space-between;">
+            <div style="width: 48%;">
+                {{ form.fetal_movement.label_tag }}
+                <br>
+                {{ form.fetal_movement }}
+            </div>
+            <div style="width: 48%; margin-left: 100px;">
+                {{ form.uterine_contractions.label_tag }}
+                {{ form.uterine_contractions }}
+            </div>
+        </div>
+       
+        <div style="display: flex; justify-content: space-between;">
+            <div style="width: 48%;">
+                {{ form.light_decelerations.label_tag }}
+                {{ form.light_decelerations }}
+            </div>
+            <div style="width: 48%; margin-right: -15px;">
+                {{ form.severe_decelerations.label_tag }}
+                {{ form.severe_decelerations }}
+            </div>
+        </div>
+       
+        <div style="display: flex; justify-content: space-between;">
+            <div style="width: 48%;">
+                {{ form.prolongued_decelerations.label_tag }}
+                {{ form.prolongued_decelerations }}
+            </div>
+            <div style="width: 48%;">
+                {{ form.abnormal_short_term_variability.label_tag }}
+                {{ form.abnormal_short_term_variability }}
+            </div>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+            <div style="width: 48%;">
+                {{ form.mean_value_of_short_term_variability.label_tag }}
+                {{ form.mean_value_of_short_term_variability }}
+            </div>
+            <div style="width: 48%;">
+                {{ form.percentage_of_time_with_abnormal_long_term_variability.label_tag }}
+                {{ form.percentage_of_time_with_abnormal_long_term_variability }}
+            </div>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+            <div style="width: 48%;">
+                {{ form.mean_value_of_long_term_variability.label_tag }}
+                {{ form.mean_value_of_long_term_variability }}
+            </div>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

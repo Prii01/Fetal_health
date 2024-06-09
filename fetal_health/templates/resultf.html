@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block style %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .chart-container {
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}
+{% load static %}
+{% block index %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Fetal Health Data</h1>
+        <ul>
+            {% for result in result_list %}
+                {% for key, value in result.items %}
+                    <li><strong>{{ key }}:</strong> {{ value }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+        
+        <!-- Display Recommendation if available -->
+        {% if recommendation %}
+            <h2>Recommendation</h2>
+            <p>{{ recommendation }}</p>
+        {% endif %}
+
+        <!-- Line Chart -->
+        <div class="chart-container">
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const ctx = document.getElementById('lineChart').getContext('2d');
+            
+            // Extract the input values from the Django context
+            const inputValues = {{ input_values|safe }};
+            
+            // Create labels and data for the chart from the input values
+            const labels = Object.keys(inputValues);
+            const data = Object.values(inputValues);
+            
+            const lineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Input Values',
+                        data: data,
+                        backgroundColor: 'pink',
+                        borderColor: 'blue',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}
